@@ -1,9 +1,11 @@
 const express = require('express');
-//transforme le corp des requetes en objet JS
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-// nous donne access au chemin des fichiers
 const path = require('path');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+
+require('dotenv').config();
 
 const saucesRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user')
@@ -11,7 +13,7 @@ const userRoutes = require('./routes/user')
 const app = express();
 
 // Connexion à la base de données MongoDB
-mongoose.connect('mongodb+srv://users:sopekocko2020@cluster0.6hccu.mongodb.net/users?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONGODBaccess,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -27,9 +29,11 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());// json c'est une methode de l'objet bodyParser
 
-// creation des middleware
-app.use('/images', express.static(path.join(__dirname, 'images'))); // pourque app.js serve le dossier /images 
+app.use(mongoSanitize()); // mongo-sanitize pour prévenir les risques d'injections
+app.use(helmet()); // helmet configure de manière appropriée des en-têtes HTTP, contient 9 fonctions middlewares
 
+
+app.use('/images', express.static(path.join(__dirname, 'images'))); // pourque app.js serve le dossier /images 
 app.use('/api/sauces', saucesRoutes);// pour le CRUD des sauces - se refer à ./routes/sauces.js
 app.use('/api/auth', userRoutes);// pour l'autentification de l'utilisateur - se refer à ./routes/user.js
 
