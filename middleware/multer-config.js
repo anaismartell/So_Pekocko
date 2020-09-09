@@ -1,22 +1,21 @@
-const multer = require("multer");
+const multer = require('multer');
 
+//pour modifier l'extension des fichiers
 const MIME_TYPES = {
-  "image/jpg": "jpg",
-  "image/png": "png",
-  "image/jpeg": "jpg",
-};
+    'image/jpg': 'jpg',
+    'image/jpeg': 'jpg',
+    'image/png': 'png'
+}
 
-const storage = multer.diskStorage({
-  //création d'une constante storage , avec multer comme configuration
-  destination: (req, file, callback) => {
-    //la fonction destination indique à multer d'enregistrer les fichiers dans le dossier images
-    callback(null, "images");
-  },
-  filename: (req, file, callback) => {
-    const name = file.originalname.split(" ").join("_"); //la fonction filename indique à multer d'utiliser le nom d'origine, de remplacer les espaces par des underscores
-    const extension = MIME_TYPES[file.mimetype]; //Elle utilise ensuite la constante dictionnaire de type MIME pour résoudre l'extension de fichier appropriée
-    callback(null, name + Date.now() + "." + extension); //ajouter un timestamp Date.now() comme nom de fichier.
-  },
+const storage = multer.diskStorage({// on enregistre dans le disk
+    destination: (req, file, callback) => {// dans quel dossier enregistrer les fichier 
+        callback(null, 'images');// null : pas d'erreur - 'images' : dossier de destination
+    },
+    filename: (req, file, callback) => {// quel nom de fichier utiliser pour générer nom
+        const name = file.originalname.split(' ').join('_');// nom d'origine, remplace des espaces par des _
+        const extension = MIME_TYPES[file.mimetype];// extension a ajouter au nom
+        callback(null, name + Date.now() + '.' + extension);// nom d'origine + numero unique + . + extension
+    }
 });
 
-module.exports = multer({ storage }).single("image"); //exportons ensuite l'élément multer entièrement configuré, lui passons notre constante storage et lui indiquons que nous gérerons uniquement les téléchargements de fichiers image
+module.exports = multer({ storage: storage }).single('image');
