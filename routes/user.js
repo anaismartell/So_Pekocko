@@ -9,8 +9,8 @@ const passLimiter = rateLimit({
     max: 3 // 3 essais max par adresse ip
   });
 
-router.post('/signup', userCtrl.signup);// pour envoyer les info (email + password) d'un nouveau utilisateur
-router.post('/login', passLimiter, userCtrl.login);// pour envoyer les info d'un utilisateur deja existant
+router.post('/signup', userCtrl.signup);// pour envoyer les info (email + password) d'un nouvel utilisateur
+router.post('/login', passLimiter, userCtrl.login);// pour envoyer les informations d'un utilisateur déjà existant
 
 
 module.exports = router;

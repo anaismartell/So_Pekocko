@@ -8,10 +8,10 @@ const MIME_TYPES = {
 }
 
 const storage = multer.diskStorage({// on enregistre dans le disk
-    destination: (req, file, callback) => {// dans quel dossier enregistrer les fichier 
-        callback(null, 'images');// null : pas d'erreur - 'images' : dossier de destination
+    destination: (req, file, callback) => {// dans quel dossier enregistrer les fichiers
+        callback(null, 'images');// null : pas d'erreur - le dossier images est le dossier de destination
     },
-    filename: (req, file, callback) => {// quel nom de fichier utiliser pour générer nom
+    filename: (req, file, callback) => {// quel nom de fichier utiliser pour générer le nom
         const name = file.originalname.split(' ').join('_');// nom d'origine, remplace des espaces par des _
         const extension = MIME_TYPES[file.mimetype];// extension a ajouter au nom
         callback(null, name + Date.now() + '.' + extension);// nom d'origine + numero unique + . + extension

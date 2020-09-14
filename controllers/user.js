@@ -26,8 +26,8 @@ exports.signup = (req, res, next) => { // inscription du user
         bcrypt.hash(req.body.password, 10) // bcrypt hashe le mot de passe
         .then(hash => {
             const user = new User ({  // crée un nouveau user
-                email: maskedMail, // l'adresse mail masquée 
-                password: hash
+                email: maskedMail, // avec l'adresse mail masquée 
+                password: hash // et le mot de passe hashé
             });
             user.save() // et mongoose le stocke dans la bdd
             .then( hash => res.status(201).json({ message: 'Utilisateur créé !'}))
