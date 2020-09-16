@@ -14,7 +14,8 @@ passwordSchema
 .is().max(20)   // longueur maximum de 20 caractères                               
 .has().uppercase()  // doit contenir une majuscule                        
 .has().lowercase()  // doit contenir une miniscule                         
-.has().digits()    // doit contenir un chiffre                            
+.has().digits()    // doit contenir un chiffre    
+.has().not().symbols() // ne doit pas contenir de caractères spéciaux                        
 .has().not().spaces();  // ne doit pas contenir d'espaces                     
 
 
@@ -40,7 +41,7 @@ exports.signup = (req, res, next) => { // inscription du user
     
 exports.login = (req, res, next) => { // connexion du user
 const maskedMail = MaskData.maskEmail2(req.body.email);
-    User.findOne({ email: maskedMail }) // on vérifie que l'adresse mail figure bien dan la bdd
+    User.findOne({ email: maskedMail }) // on vérifie que l'adresse mail figure bien dansla bdd
     .then(user => {
         if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });

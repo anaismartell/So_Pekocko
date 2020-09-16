@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGODBaccess,
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*'); //accéder à l'API depuis n'importe quelle origine ( '*' )
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');// on donne l'autorisation de utiliser certaines entete
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');// et aussi sur certaines methodes
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');// et aussi sur certaines methodes
     next();// j'appelle next() pour passer au middleware d'apres
 });
 
@@ -35,7 +35,7 @@ app.use(helmet()); // helmet configure de manière appropriée des en-têtes HTT
 
 app.use('/images', express.static(path.join(__dirname, 'images'))); // pourque app.js serve le dossier /images 
 app.use('/api/sauces', saucesRoutes);// pour le CRUD des sauces - se refer à ./routes/sauces.js
-app.use('/api/auth', userRoutes);// pour l'autentification de l'utilisateur - se refer à ./routes/user.js
+app.use('/api/auth', userRoutes);// pour l'authentification de l'utilisateur - se refer à ./routes/user.js
 
   
 module.exports = app;// Export de l'application

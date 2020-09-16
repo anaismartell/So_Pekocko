@@ -84,8 +84,7 @@ exports.userSaucesLiked = (req, res, next) => {
       )
         .then(() =>
           res
-            .status(200)
-            .json({ message: "L'utilisateur n'aime pas cette sauce !" })
+            .status(200).json({ message: "L'utilisateur n'aime pas cette sauce !" })
         )
         .catch((error) => res.status(400).json({ error }));
     } else {
