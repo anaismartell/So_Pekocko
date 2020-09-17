@@ -5,12 +5,12 @@ const fs = require('fs');// files sistem
 // Création d'une nouvelle sauce
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);// pour transformer l'objet JSON en JS
-    const sauce = new Sauce({// creation d'une nouvelle instance du model thing
+    const sauce = new Sauce({// creation d'une nouvelle instance du modèle sauce
         ...sauceObject,
         // http://localhost:3000/image/nomdufichier 
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` // modifier l'url de l'image par le nom de l'objet généré par multer
     });
-    sauce.save()// pour enregistrer l'objet thing dans la base de données
+    sauce.save()// pour enregistrer l'objet sauce dans la base de données
         .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
         .catch(error => res.status(400).json({ error }));
 
